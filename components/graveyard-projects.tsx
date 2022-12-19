@@ -3,11 +3,15 @@ import React from "react";
 
 interface GraveyardProjectsProps {
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export function GraveyardProjects({ className }: GraveyardProjectsProps) {
+export function GraveyardProjects({
+  className,
+  style,
+}: GraveyardProjectsProps) {
   return (
-    <section className={className} id="graveyard-projects">
+    <section className={className} style={style} id="graveyard-projects">
       <div className="flex flex-col justify-center pt-10 max-w-4xl ">
         <h1 className="text-7xl text-white font-bold text-center">
           Graveyard Projects <span className="text-4xl">👻</span>
