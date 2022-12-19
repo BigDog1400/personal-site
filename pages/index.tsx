@@ -7,7 +7,7 @@ import { GraveyardProjects } from "../components/graveyard-projects";
 
 export default function Home() {
   return (
-    <>
+    <main>
       <header className="flex justify-center">
         <nav className="md:p-6 pt-4 pl-4 pr-4 md:flex flex-row justify-between items-center w-full max-w-4xl">
           <Link
@@ -84,6 +84,6 @@ export default function Home() {
       </section>
       <GraveyardProjects className="flex flex-col justify-between items-center min-h-screen p-4 md:p-0 md:pt-10" />
       <ContactMe />
-    </>
+    </main>
   );
 }
