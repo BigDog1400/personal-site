@@ -3,6 +3,7 @@ import React from "react";
 import { SocialLinks } from "../components/social-links";
 import { ContactMe } from "../components/contact-me";
 import Link from "next/link";
+import { GraveyardProjects } from "../components/graveyard-projects";
 
 export default function Home() {
   return (
@@ -32,7 +33,7 @@ export default function Home() {
             </li>
 
             <li className="text-white text-sm md:text-base hover:text-gray-300">
-              <a href="/graveyard">
+              <a href="#graveyard-projects">
                 Graveyard projects <span className="text-red-500">👻</span>
               </a>{" "}
             </li>
@@ -47,7 +48,7 @@ export default function Home() {
           <div className="flex flex-col md:pt-[calc(15vh)] max-w-md">
             <span className="text-4xl mb-3">👋</span>
             <h1 className="text-7xl text-white font-bold">Isaac</h1>
-            <h2 className="text-2xl text-white font-bold pt-5">
+            <h2 className="text-2xl font-bold pt-5 text-[#1597BB]">
               Web developer
             </h2>
             <p className="text-gray-300 pt-5 text-lg">
@@ -81,6 +82,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <GraveyardProjects className="flex flex-col justify-between items-center min-h-screen p-4 md:p-0 md:pt-10" />
       <ContactMe />
     </>
   );
