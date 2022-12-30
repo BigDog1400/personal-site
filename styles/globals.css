@@ -2,9 +2,17 @@
 
 @layer base {
   html {
-    @apply text-white;
+    @apply text-gray-400;
   }
 }
 
 @tailwind components;
 @tailwind utilities;
+
+.icon .icon-link {
+  @apply text-gray-400;
+}
+
+.details-mb-4 {
+  @apply mb-4;
+}

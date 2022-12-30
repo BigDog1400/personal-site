@@ -1,4 +1,7 @@
 import "../styles/globals.css";
+import "@code-hike/mdx/styles";
+import "../styles/ch-styles.css";
+
 import type { AppProps } from "next/app";
 import { Manrope } from "@next/font/google";
 import { QueryClientProvider } from "@tanstack/react-query";
