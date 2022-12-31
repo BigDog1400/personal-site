@@ -45,13 +45,14 @@ module.exports = {
               backgroundColor: theme("colors.gray.800"),
             },
             code: {
-              color: theme("colors.pink.500"),
-              backgroundColor: theme("colors.gray.100"),
+              color: theme("colors.gray.300"),
               paddingLeft: "4px",
               paddingRight: "4px",
               paddingTop: "2px",
               paddingBottom: "2px",
               borderRadius: "0.25rem",
+              fontWeight: "500",
+              backgroundColor: theme("colors.gray.800"),
             },
             "code::before": {
               content: "none",
@@ -92,6 +93,11 @@ module.exports = {
             },
             "blockquote p:last-of-type::after": {
               content: "none",
+            },
+            img: {
+              borderRadius: "0.25rem",
+              marginLeft: "auto",
+              marginRight: "auto",
             },
           },
         },

@@ -17,7 +17,7 @@ export default function Home() {
           <div className="flex flex-col md:pt-[calc(15vh)] max-w-md">
             <span className="text-4xl mb-3">👋</span>
             <h1 className="text-7xl text-white font-bold">Isaac</h1>
-            <h2 className="text-2xl font-bold pt-5 text-[#1597BB]">
+            <h2 className="text-2xl font-bold pt-5 text-teal-600">
               Web developer
             </h2>
             <p className="text-gray-300 pt-5 text-lg">
