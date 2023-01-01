@@ -55,13 +55,13 @@ function BlogPage({
                   ))}
                 </div>
                 <p className="mt-4  text-[#d4d4d4]">
-                  {new Date(post.data.date).toLocaleDateString(undefined, {
+                  {new Date(post.data.date).toLocaleDateString("es-us", {
                     day: "numeric",
                     month: "long",
                     year: "numeric",
                   })}{" "}
                   •{" "}
-                  {new Intl.NumberFormat(undefined, {
+                  {new Intl.NumberFormat("es-us", {
                     style: "unit",
                     unit: "minute",
                     unitDisplay: "long",
