@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import "../styles/globals.css";
 import "@code-hike/mdx/styles";
 import "../styles/ch-styles.css";
@@ -19,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
       </QueryClientProvider>
+      <Analytics />
     </>
   );
 }
