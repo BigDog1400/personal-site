@@ -6,11 +6,6 @@ export const frontMatterPlugin =
   () =>
   /** @param {import('@types/mdast').Root} tree */
   (tree, file) => {
-    console.log(JSON.stringify(tree.children[0], null, 2));
-    console.log(
-      JSON.stringify(tree.children[tree.children.length - 1], null, 2),
-    );
-
     const { data } = matter(file.value);
 
     // Step 2: Remove frontmatter after converting it into JS object

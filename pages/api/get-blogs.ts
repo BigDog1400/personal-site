@@ -53,7 +53,6 @@ export const getPosts = () => {
     })
     .filter((post) => post);
 
-  console.log(posts);
   return posts;
 };
 
