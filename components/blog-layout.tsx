@@ -34,7 +34,7 @@ export function BlogLayoutPage({ meta, children }: BlogLayoutProps) {
       </Head>
       <div className="flex flex-col justify-center items-center mb-20 px-5">
         <div className="flex flex-col justify-center items-start max-w-4xl mt-10 space-y-5">
-          <h1 className="text-5xl font-bold text-justify text-gray-100">
+          <h1 className="text-4xl md:text-5xl font-bold text-white">
             {meta?.title}
           </h1>
           <span className="inline-block py-1.5 px-2.5 text-sm leading-none text-center whitespace-nowrap align-baseline bg-neutral-900 text-gray-400 rounded-2xl">
