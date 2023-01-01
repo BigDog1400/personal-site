@@ -1,6 +1,7 @@
 import React from "react";
 import { CommonLayoutPage } from "./common-layout";
 import Head from "next/head";
+import CommentsSection from "./comments-section";
 
 interface BlogLayoutProps {
   children: React.ReactNode;
@@ -44,6 +45,10 @@ export function BlogLayoutPage({ meta, children }: BlogLayoutProps) {
         {/* border top 1px */}
         <div className="border-t-gray-600 border-t w-full max-w-4xl mt-6 pt-4 prose prose-lg prose-dark dark:prose-dark">
           {children}
+        </div>
+        {/* comment section */}
+        <div className="max-w-4xl w-full mt-10">
+          <CommentsSection />
         </div>
       </div>
     </CommonLayoutPage>
