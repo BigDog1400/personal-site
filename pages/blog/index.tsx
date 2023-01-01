@@ -32,7 +32,10 @@ function BlogPage({
   return (
     <CommonLayoutPage>
       <div className="max-w-4xl mx-auto flex flex-col pt-4 sm:pt-10  md:px-0 px-5">
-        <h1 className="text-3xl text-white font-bold">Blogs</h1>
+        <h1 className="text-3xl text-white font-bold">
+          Blog
+          <span className="text-teal-600">📝</span>
+        </h1>
         <div className="pt-4">
           {posts.map((post) => (
             <Link prefetch href={`/blog/${post.slug}`} key={post.slug}>
