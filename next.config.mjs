@@ -5,6 +5,7 @@ import withMDX from "@next/mdx";
 import rehypeSlug from "rehype-slug";
 import { remarkHeadingId } from "remark-custom-heading-id";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { frontMatterPlugin } from "./utils/from-matter-plugin.mjs";
 
 const _withMDX = withMDX({
   extension: /\.mdx?$/,
@@ -14,6 +15,7 @@ const _withMDX = withMDX({
     // https://github.com/remarkjs/remark-gfm#install
 
     remarkPlugins: [
+      frontMatterPlugin,
       remarkHeadingId,
       [remarkCodeHike, { theme, showCopyButton: true }],
     ],
