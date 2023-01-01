@@ -31,17 +31,17 @@ function BlogPage({
 }) {
   return (
     <CommonLayoutPage>
-      <div className="max-w-4xl mx-auto flex flex-col pt-10">
+      <div className="max-w-4xl mx-auto flex flex-col pt-4 sm:pt-10  md:px-0 px-5">
         <h1 className="text-3xl text-white font-bold">Blogs</h1>
         <div className="pt-4">
           {posts.map((post) => (
             <Link prefetch href={`/blog/${post.slug}`} key={post.slug}>
-              <div className="p-5 rounded-lg cursor-pointer hover:bg-gray-900">
+              <div className="md:p-5 rounded-lg cursor-pointer hover:bg-gray-900">
                 <h2 className="text-2xl font-bold  text-teal-600">
                   {post.data.title}
                 </h2>
                 <p className="mt-4  text-[#d4d4d4]">{post.data.description}</p>
-                <div className="mt-4 ">
+                <div className="mt-4 flex flex-wrap gap-y-2 items-center">
                   {post.data.tags.split(",").map((tag) => (
                     <span
                       key={tag}
