@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { CommonLayoutPage } from "./common-layout";
 import Head from "next/head";
 
@@ -14,7 +13,7 @@ interface BlogLayoutProps {
   };
 }
 
-export function BlogLayoutPage({ children, meta }: BlogLayoutProps) {
+export function BlogLayoutPage({ meta, children }: BlogLayoutProps) {
   return (
     <CommonLayoutPage>
       <Head>
@@ -36,10 +35,10 @@ export function BlogLayoutPage({ children, meta }: BlogLayoutProps) {
       <div className="flex flex-col justify-center items-center mb-20 px-5">
         <div className="flex flex-col justify-center items-start max-w-4xl mt-10 space-y-5">
           <h1 className="text-5xl font-bold text-justify text-gray-100">
-            {meta.title}
+            {meta?.title}
           </h1>
           <span className="inline-block py-1.5 px-2.5 text-sm leading-none text-center whitespace-nowrap align-baseline bg-neutral-900 text-gray-400 rounded-2xl">
-            {new Date(meta.date).toLocaleDateString()}
+            {new Date(meta?.date).toLocaleDateString()}
           </span>
         </div>
         {/* border top 1px */}
