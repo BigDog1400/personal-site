@@ -33,9 +33,9 @@ export function CommonLayoutPage({ children }: CommonLayoutProps) {
             </li>
 
             <li className="text-white text-sm md:text-base hover:text-gray-300">
-              <a href="#graveyard-projects">
+              <Link href="/#graveyard-projects">
                 Graveyard projects <span className="text-red-500">👻</span>
-              </a>{" "}
+              </Link>{" "}
             </li>
           </ul>
         </nav>
