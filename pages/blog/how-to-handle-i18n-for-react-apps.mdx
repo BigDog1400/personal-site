@@ -1,11 +1,11 @@
-import { BlogLayoutPage } from "../../components/blog-layout.tsx";
-
-export const meta = {
-  author: "Rich Haines",
-  date: "2020-10-01",
-  title: "Como internacionalizar un sitio web de forma automática con React",
-  id: "como-montar-um-blog-com-nextjs-e-mdx-100-estatico-com-deploy-no-netlify",
-};
+---
+title: Como internacionalizar un sitio web de forma automática con React
+description: Brinda una experiencia de usuario satisfactoria, cuando tu sitio web es visitado por personas de distintos países, es importante que el contenido se adecue a los idiomas que entienden los usuarios.
+date: "2020-10-01"
+author: Isaac P.
+id: como-internacionalizar-un-sitio-web-de-forma-automatica-con-react
+tags: react, internacionalizacion, i18n, react-intl
+---
 
 Para poder dar una experiencia de usuario satisfactoria, cuando nuestro sitio web es visitado por personas de distintos países, es importante que el contenido se adecue a los idiomas que entienden los usuarios.
 
@@ -492,7 +492,3 @@ En este post hemos visto como podemos manejar la internacionalización de nuestr
 Pero la internacionalización no es solo traducir los mensajes de nuestra aplicación, también es tener en cuenta los cambios de los formatos en textos como fechas, monedas, unidades de medida, etc. Para esto podemos usar `formatjs` y sus distintos [`formatters`](https://formatjs.io/docs/react-intl/components). Te recomiendo que explores los distintos formatters que ofrece `formatjs` para que puedas usarlos en tu aplicación.
 
 Sin mas que agregar, espero que este post les haya sido de utilidad, y usen la internacionalización para mejorar la experiencia de sus usuarios.
-
-export default ({ children }) => (
-  <BlogLayoutPage meta={meta}>{children}</BlogLayoutPage>
-);
