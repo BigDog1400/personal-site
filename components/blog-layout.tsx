@@ -26,7 +26,7 @@ export function BlogLayoutPage({ meta, children }: BlogLayoutProps) {
         {/* <meta property="og:image" content={meta.img} key="ogimage" /> */}
         <meta
           property="og:url"
-          content={`https://www.my-blog.com/${meta.id}`}
+          content={`${process.env.VERCEL_URL}/blog/${meta.id}`}
           key="ogurl"
         />
         <meta property="og:type" content="article" key="ogtype" />
