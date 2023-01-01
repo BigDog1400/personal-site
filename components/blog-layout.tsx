@@ -39,7 +39,11 @@ export function BlogLayoutPage({ meta, children }: BlogLayoutProps) {
             {meta?.title}
           </h1>
           <span className="inline-block py-1.5 px-2.5 text-sm leading-none text-center whitespace-nowrap align-baseline bg-neutral-900 text-gray-400 rounded-2xl">
-            {new Date(meta?.date).toLocaleDateString()}
+            {new Date(meta?.date).toLocaleDateString("es-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </span>
         </div>
         {/* border top 1px */}
