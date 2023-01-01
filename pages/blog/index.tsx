@@ -38,7 +38,7 @@ function BlogPage({
         </h1>
         <div className="pt-4">
           {posts.map((post) => (
-            <Link prefetch href={`/blog/${post.slug}`} key={post.slug}>
+            <Link href={`/blog/${post.slug}`} key={post.slug}>
               <div className="md:p-5 rounded-lg cursor-pointer hover:bg-gray-900">
                 <h2 className="text-2xl font-bold  text-teal-600">
                   {post.data.title}
