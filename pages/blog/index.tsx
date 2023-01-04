@@ -3,6 +3,7 @@ import { CommonLayoutPage } from "../../components/common-layout";
 import { getPosts } from "../api/get-blogs";
 import Link from "next/link";
 import { HeadMetadata } from "../../components/head-metadata";
+import { useRouter } from "next/router";
 
 export const getStaticProps = () => {
   const posts = getPosts(); // the argument has no effect yet
@@ -25,11 +26,15 @@ function BlogPage({
       id: string;
       tags: string;
       description: string;
+      lang: string;
     };
     slug: string;
     readTime: string;
   }>;
 }) {
+  const { locale } = useRouter();
+
+  const postsByLang = posts.filter((post) => post.data.lang === locale);
   return (
     <>
       <HeadMetadata url={process.env.NEXT_PUBLIC_WEBSITE_URL + "/blog"} />
@@ -40,8 +45,8 @@ function BlogPage({
             <span className="text-teal-600">📝</span>
           </h1>
           <div className="pt-4">
-            {posts.map((post) => (
-              <Link href={`/blog/${post.slug}`} key={post.slug}>
+            {postsByLang.map((post) => (
+              <Link href={`/blog/${post.data.id}`} key={post.slug}>
                 <div className="md:p-5 rounded-lg cursor-pointer hover:bg-gray-900">
                   <h2 className="text-2xl font-bold  text-teal-600">
                     {post.data.title}
@@ -50,7 +55,7 @@ function BlogPage({
                     {post.data.description}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-y-2 items-center">
-                    {post.data.tags.split(",").map((tag) => (
+                    {post.data?.tags?.split(",").map((tag) => (
                       <span
                         key={tag}
                         className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
