@@ -1,0 +1,500 @@
+---
+title: "Integration of i18n in your React application: Automating translations"
+description: Learn how to implement internationalization in your React application, and automate the translation process of your application.
+date: "12/31/2022"
+updated: "03/01/2022"
+author: Isaac P.
+id: i18n-integration-in-your-react-app-translation-automation
+tags: react, internationalization, i18n, react-intl
+lang: en
+---
+
+When internationalizing our application, we have to make sure that our content (text, images, currencies, etc.) adapts to the different cultures, regions or languages of the users who visit our website.
+
+Some examples of this are:
+
+- If a user from a Spanish-speaking country visits our website, it is important that the content is displayed in Spanish, and not in English (and vice versa, for English-speaking users).
+- When displaying currencies in our application (for example, in a shopping cart), we have to take into account the currency format of the user's region. For example, in some regions, the currency symbol comes before the number (e.g. $100), and in other regions it comes after (e.g. 100 US$).
+- When displaying dates, we have to take into account the date format of the user's region. For example, in some countries the date format DD/MM/YYYY is used, and in others the format MM/DD/YYYY.
+
+All these elements can become very tedious to maintain, and that is why there are tools that help us automate this process. This post is going to be focused on how to translate the content of our application in the most automated way, and it is also going to give us the bases we need to be able to handle the different currency formats, dates, etc.
+
+## How to translate the content of a website?
+
+This is one of the processes involved in the internationalization (i18n) of an application. It is a process that can be done manually, but it is very tedious and prone to errors.
+But like any tedious task, there are tools that help us automate this process.
+
+For this reason, we are going to see how to translate the content of our application automatically with React, using the [react-intl](https://www.i18next.com/) library.
+
+## Setup of our application
+
+For this example, we are going to create an app from scratch using Vite and React. If you already have an application created, you can skip this step, but make sure you have `ESLint` configured, as we are going to use it to automate part of the process.
+
+To create our application, we are going to use the Vite React template with TypeScript:
+
+```bash
+npm create vite@latest i18n-app --template react-ts
+```
+
+Once the project is created, we are going to install the dependencies and we are going to run the development server:
+
+```bash
+cd i18n-app
+npm install
+npm run dev
+```
+
+We are going to see that our application opens in the browser, and that we can see the initial components of our project.
+![Vite React App](/images/blog/how-to-handle-i18n-for-react-apps/1.png)
+
+## Configuring react-intl
+
+Now that we have our application, let's install the `react-intl` library:
+
+```bash
+npm install react-intl
+```
+
+Once installed, we are going to add the `IntlProvider` component to the root of our application, so that all components can access the internationalization information.
+
+> Note: If you are using NextJS, Remix, Gatsby, etc, your application root file will be different, but the process is the same.
+
+```tsx main.tsx
+// mark
+import { IntlProvider } from "react-intl";
+
+ReactDOM.render(
+  <React.StrictMode>
+    // mark
+    <IntlProvider locale="en" defaultLocale="en">
+      <App />
+      // mark
+    </IntlProvider>
+  </React.StrictMode>,
+  document.getElementById("root"),
+);
+```
+
+The `IntlProvider` component receives a prop called `locale`, this prop indicates the language we want to use in our application.
+
+## Change the language of our application
+
+Now that we have our `IntlProvider` component configured, let's define a strategy for maintaining and changing the language of our application.
+There are several ways to do this, each with its pros and cons.
+
+- Store the language in the `localStorage` or `sessionStorage`: This is a good option if your application is only client side, and you don't need to maintain the language between sessions.
+- Store the language in a `cookie`: This option is good if your application is server side, and you need to keep the language between sessions since it allows you to read the language from the server.
+- Store the language in the `URL`: This option is the most flexible, since it allows you to keep the language between sessions, and allows you to share the language with other people (for example, if you share a link with a particular language, the person who visits it will see the website in that language). It is very useful for websites that have content in different languages, and that want the user to be able to share the content in the language of their choice. It can also be combined with the previous option, to maintain the language between sessions.
+
+Our `IntlProvider` has a prop called `defaultLocale`, this prop indicates the language that we want to use by default in our application, in case no language has been defined.
+
+For this example, we will use the localStorage option to maintain the language between sessions.
+
+Let's modify our `IntlProvider` component to read the language of the localStorage:
+
+```tsx src/main.tsx
+//...
+// mark
+const getUserLocale = () => {
+  // mark
+  const locale = localStorage.getItem("locale");
+  // mark
+  if ((locale && locale === "es") || locale === "en") {
+    // mark
+    return locale;
+    // mark
+  }
+  // mark
+  return "es";
+  // mark
+};
+
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <IntlProvider
+      // mark
+      locale={getUserLocale()}
+      defaultLocale="es"
+    >
+      <App />
+    </IntlProvider>
+  </React.StrictMode>,
+);
+```
+
+The `getUserLocale` function allows you to get the language that the user has selected. If the user has not selected a language, the default language will be used.
+
+Later we will implement a component that allows us to change the language of our application.
+
+## How to automate the translation process
+
+To speed up the translation process, we are going to use `formatjs` (set of libraries that includes react-intl), this provides us with a tool that allows us to automate this process.
+On their website we can see an example of how this flow works:
+[![How to handle i18n for React Apps](https://formatjs.io/assets/images/workflow-cfcf0fe32b9a2d1097fcf2f11ed8b384.svg)](https://formatjs.io/docs/getting-started/application-workflow#pipeline)
+
+The workflow proposed by formatjs is as follows:
+
+- Define the messages that we want to translate on our website.
+- Extract the messages to a translation file.
+- Translate messages (manually or with a translation tool).
+- Compile the translated messages.
+
+### Define the messages we want to translate
+
+For this, we are going to use the `FormattedMessage` component of `react-intl`, this component allows us to define a message in one language, and then use it in any other language.
+Let's define a message in one of our components:
+
+```tsx App.tsx
+import { FormattedMessage } from "react-intl";
+
+const App = () => {
+  return (
+    <div>
+      <FormattedMessage
+        id="app.title"
+        defaultMessage="Como manejar i18n para aplicaciones React"
+        description="Titulo de la aplicacion"
+      />
+    </div>
+  );
+};
+```
+
+The `FormattedMessage` component receives 3 props:
+
+- `id`: This prop is a unique identifier for the message, this identifier is used to look up the message in the translation file.
+- `defaultMessage`: This prop indicates the default message (then we will be translate this message to the other languages).
+- `description`: This prop is a description of the message, this description is used to help translators understand the context of the message.
+
+#### Generar automaticamente los ids de los mensajes
+
+Naming things in programming is one of the most difficult tasks, personally I prefer to avoid naming things manually whenever possible, and I think the people at `formatjs` think the same, since they provide us with a tool to automatically generate the ids of the messages.
+
+To automatically generate the ids of the messages, we are going to use the plugin is ESLint `eslint-plugin-formatjs`, this plugin provides us with a rule called `formatjs/enforce-default-message`, this allows us to define an unspecified message the id, and the plugin will automatically generate the id of the message.
+
+So make sure you have ESLint configured in your project, if you are following this tutorial, in the next section I will explain how to configure ESLint from scratch, if not, you can skip this section.
+
+<details className="details-mb-4">  
+  <summary className="ml-6 pt-2 pb-2 text-xl font-bold">Configure ESLint from scratch (optional)</summary>
+  <div className="pl-4 pr-4">
+```bash 
+npm install -D eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-prettier eslint-plugin-react prettier
+```
+
+Now we are going to create a file called `.eslintrc` in the root of our project, and we are going to configure ESLint to use the plugins we installed earlier.
+
+```json .eslintrc
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "eslint-config-prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {}
+}
+```
+
+Now we are going to create a `.eslintignore` in the root of our project, and we are going to indicate which files we want ESLint to ignore.
+
+```bash
+node_modules/
+dist/
+.prettierrc.js
+.eslintrc.js
+env.d.ts
+```
+
+Now we create a `.prettierrc` and add a basic configuration to format our code.
+
+```json .prettierrc
+{
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": true,
+  "printWidth": 120,
+  "bracketSpacing": true
+}
+```
+
+Lastly, we are going to create in our `package.json` file a script to run ESLint.
+
+```json package.json
+"scripts": {
+  "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+  "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
+}
+```
+
+  </div>
+</details>
+
+##### Installing the `eslint-plugin-formatjs` plugin
+
+With ESLint configured, let's install the `eslint-plugin-formatjs` plugin:
+
+```bash
+npm install -D eslint-plugin-formatjs
+```
+
+Now let's configure the `eslint-plugin-formatjs` plugin in our `.eslintrc` file:
+
+```json .eslintrc
+{
+  // Add formatjs to the list of ESLint plugins
+  "plugins": ["formatjs"],
+  // Add the formatjs/enforce-id rule to the list of ESLint rules
+  "rules": {
+    "formatjs/enforce-id": [
+      "error",
+      {
+        "idInterpolationPattern": "[sha512:contenthash:base64:6]"
+      }
+    ]
+  }
+}
+```
+
+This configuration will force all the messages we define to have an id, and that the id be generated automatically using the pattern `sha512:contenthash:base64:6` (this pattern is the one used by `react-intl` by default , you don't have to worry about understanding it).
+
+If we see the `<FormattedMessage/>` that we defined before, we will see that our IDE is giving us an error, this is because the message id does not follow the pattern that we defined in the ESLint configuration.
+
+![Image of an error message in the IDE](/images/blog/how-to-handle-i18n-for-react-apps/2.png)
+
+If we inspect the error message, we will see that it is indicating that the message id should be generated automatically using the pattern `sha512:contenthash:base64:6`.
+
+```
+"id" does not match with hash pattern [sha512:contenthash:base64:6]. Expected: G2U8Pi
+```
+
+To fix this error, we can run the command that we have configured in our `package.json` file to run ESLint, in this case it is `npm run lint:fix`, and ESLint will automatically generate the message id.
+
+```tsx App.tsx
+import { FormattedMessage } from "react-intl";
+
+const App = () => {
+  return (
+    <div>
+      <FormattedMessage
+        // mark
+        id="G2U8Pi"
+        defaultMessage="Como manejar i18n para aplicaciones React"
+        description="Titulo de la aplicacion"
+      />
+    </div>
+  );
+};
+```
+
+Great! We no longer have to worry about creating ids for our messages manually! Now we can move forward with the last part of our automation.
+
+#### Creating a script to extract the messages
+
+Now we only need two things to finish automating the message extraction process, the first is to create a script to extract the messages and the second is to create a script to compile the messages.
+
+The first thing we are going to do is install the `@formatjs/cli` library that will allow us to create the scripts we need.
+
+```bash
+npm install -D @formatjs/cli
+```
+
+##### Extracting messages with `formatjs extract`
+
+We need to create a script that takes care of reading all the `.tsx, .jsx, .js` files (files that contain React code) and extracting all the messages that we define in them in a `.json` file that we will then use as a basis for translations into other languages.
+
+```json package.json
+"scripts": {
+  // mark
+  "extract-messages": "formatjs extract \"src/**/*.{js,ts,tsx,.jsx}\" --out-file src/translations/messages/es.json --id-interpolation-pattern [sha512:contenthash:base64:6]  --ignore src/vite-env.d.ts",
+}
+```
+
+Through this script we are executing the `formatjs extract` command, which is the command provided by the `@formatjs/cli` library to extract the messages, and we are passing it several arguments:
+
+    - `src/**/*.{js,ts,tsx,.jsx}`: We indicate that we want to extract the messages from all the files that are inside the `src` folder and that have the extension `.tsx, .jsx, .js`. Make sure to change `src` to the folder where you have your React files.
+    - `--out-file src/translations/messages/es.json`: `--out-file` is used to tell `formatjs extract` in which file we want the extracted messages to be saved. Change `src/translations/messages/es.json` to the path where you want the extracted messages to be saved.
+    - `--id-interpolation-pattern [sha512:contenthash:base64:6]`: We indicate that we want the message ids to be generated automatically using the pattern `sha512:contenthash:base64:6`. This is the same as what we defined in the ESLint configuration. Through ESLint we are already forcing all messages to have an id, but in case we are not using ESLint, this would allow us to generate the ids of the messages automatically. (I personally recommend using ESLint to be able to see the message IDs in the code)
+    - `--ignore src/vite-env.d.ts`: We indicate that we want to ignore the `src/vite-env.d.ts` file as this file generates an error when trying to extract the messages.
+
+There are more options that we can pass to `formatjs extract`, you can see all the available options in the [library documentation](https://formatjs.io/docs/tooling/cli).
+
+If we run our `extract-messages` script we will see that the `src/translations/messages/es.json` file is created with all the messages that we defined in our React files.
+
+```json src/translations/messages/es.json
+{
+  "G2U8Pi": {
+    "defaultMessage": "Como manejar i18n para aplicaciones React",
+    "description": "Titulo de la aplicacion"
+  }
+}
+```
+
+Now that we have the extracted messages in a `.json` file, we can use this file as the basis for translations into other languages.
+
+There are several tools that allow us to upload a `.json` file and that generate the translated `.json` files for us. These tools may require that the `.json` file have a specific structure, for this you can pass the `--format` argument to `formatjs extract` so that the `.json` file has the structure that the tool you are going to use requires.
+
+In the [library documentation](https://formatjs.io/docs/getting-started/message-extraction#translation-management-system-tms-integration) you can see the options available for the `--format` argument . In this tutorial we are not going to use any tools to translate the messages, so we are not going to pass the `--format` argument to it.
+
+To simplify the tutorial, we are going to create another `.json` file that will have the same structure as the `es.json` file but with the messages translated to English.
+
+```json src/translations/messages/en.json
+{
+  "G2U8Pi": {
+    "defaultMessage": "How to handle i18n for React applications",
+    "description": "Application title"
+  }
+}
+```
+
+##### Compiling the extracted messages
+
+Now that we have the extracted messages in a `.json` file and we have the messages translated to other languages in other `.json` files, it is recommended that the messages be compiled to another format (`AST`) so that our application does not have to than to do it at runtime.
+
+To compile the messages we are going to use the `formatjs compile` command provided by the `@formatjs/cli` library.
+
+```json package.json
+"scripts": {
+  // mark
+   "compile-messages": "formatjs compile-folder --ast  src/translations/messages src/translations/compiled-messages"
+}
+```
+
+Our new `compile-messages` script executes the `formatjs compile-folder` command, which allows us to indicate that we want to compile all the `.json` files inside the `src/translations/messages` folder and that the files compiled should be saved in the `src/translations/compiled-messages` folder.
+We are also passing the `--ast` argument to indicate that we want the messages to be compiled to `AST` format.
+
+Additionally, we can pass the `--format` argument, if we are using a specific format (the one we have indicated when extracting the messages) so that `formatjs extract` understands the structure of the `.json` files.
+
+When we run our script we will see that the `src/translations/compiled-messages` folder has been created and that the compiled `.json` files have been created inside this folder.
+
+<CH.Code>
+```json src/translations/compiled-messages/es.json
+{
+  "G2U8Pi": [
+    {
+      "type": 0,
+      "value": "Como manejar i18n para aplicaciones React"
+    }
+  ]
+}
+```
+
+```json src/translations/compiled-messages/en.json
+{
+  "G2U8Pi": [
+    {
+      "type": 0,
+      "value": "How to handle i18n for React applications"
+    }
+  ]
+}
+```
+
+</CH.Code>
+
+Great! Now that we have our messages compiled we can use them in our application.
+
+#### Using the messages in our app
+
+Now that we have the messages translated and compiled, we can use them in our application. For this we are going to modify our `<IntlProvider>` so that it uses the compiled messages.
+
+```tsx src/main.tsx
+import { IntlProvider } from "react-intl";
+// mark
+import messagesInEnglish from "./translations/compiled-messages/en.json";
+// mark
+import messagesInSpanish from "./translations/compiled-messages/es.json";
+
+// mark
+const translations = { en: messagesInEnglish, es: messagesInSpanish };
+
+const getUserLocale = () => {
+  const locale = localStorage.getItem("locale");
+  if ((locale && locale === "es") || locale === "en") {
+    return locale;
+  }
+  return "es";
+};
+
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <IntlProvider
+      // mark
+      messages={translations[getUserLocale()]}
+      // mark
+      locale={getUserLocale()}
+      defaultLocale="es"
+    >
+      <App />
+    </IntlProvider>
+  </React.StrictMode>,
+);
+```
+
+The first thing we do is import our compiled messages and create a `translations` object that has the available languages as keys and the compiled messages in that language as its value.
+
+To our `<IntlProvider>` we pass the compiled messages of the selected language, the selected language and the default language. And that's it, we can now use our translated messages in our application.
+
+We are going to modify our `<App>` component so that we can change the language of our application.
+
+```tsx src/App.tsx
+import { FormattedMessage } from "react-intl";
+
+const App = () => {
+  // mark
+  const changeLanguage = (locale: string) => {
+    // mark
+    localStorage.setItem("locale", locale);
+    // We are going to reload the page so that the language is updated in our provider
+    // In a real application, I would recommend looking for a more elegant solution.
+    window.location.reload();
+    // mark
+  };
+  return (
+    <div>
+      <FormattedMessage
+        id="G2U8Pi"
+        defaultMessage="Como manejar i18n para aplicaciones React"
+        description="Titulo de la aplicacion"
+      />
+      // mark
+      <div
+        // mark
+        style={{
+          // mark
+          display: "flex",
+          // mark
+          justifyContent: "center",
+          // mark
+          gap: "10px",
+          // mark
+          padding: "10px",
+        }}
+      >
+        // mark
+        <button onClick={() => changeLanguage("es")}>ES</button>
+        // mark
+        <button onClick={() => changeLanguage("en")}>EN</button>
+      </div>
+    </div>
+  );
+};
+```
+
+And that's it, we can now change the language of our application! 🎉
+
+## Conclusions
+
+We have seen how we can handle the translation of our messages in React applications using `formatjs`, this is one of the first steps we can take to have an internationalized application.
+
+But internationalization is not only translating the messages of our application, it is also taking into account changes in text formats such as dates, currencies, units of measure, etc. For this we can use `formatjs` and its various [`formatters`](https://formatjs.io/docs/react-intl/components). I recommend that you explore the various formatters that `formatjs` offers so that you can use them in your application.
+
+I hope you continue to explore `formatjs` and that you can use it in your applications.

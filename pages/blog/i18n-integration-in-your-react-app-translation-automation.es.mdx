@@ -1,25 +1,30 @@
 ---
-title: Como internacionalizar un sitio web de forma automática con React
-description: Brinda una experiencia de usuario satisfactoria, cuando tu sitio web es visitado por personas de distintos países, es importante que el contenido se adecue a los idiomas que entienden los usuarios.
+title: "Integración de i18n en tu aplicación React: Automatizando las traducciones"
+description: Aprende cómo implementar internacionalización en tu aplicación React, y automatiza el proceso de traducción de tu aplicación.
 date: "12/31/2022"
+updated: "03/01/2022"
 author: Isaac P.
-id: how-to-handle-i18n-for-react-apps
+id: i18n-integration-in-your-react-app-translation-automation
 tags: react, internacionalizacion, i18n, react-intl
 lang: es
 ---
 
-Para poder dar una experiencia de usuario satisfactoria, cuando nuestro sitio web es visitado por personas de distintos países, es importante que el contenido se adecue a los idiomas que entienden los usuarios.
+Al internacionalizar nuestra aplicación, tenemos que asegurarnos que nuestro contenido (texto, imágenes, monedas, etc) se adapta a las distintas culturas, regiones o idiomas de los usuarios que visitan nuestro sitio web.
 
-Por ejemplo, si un usuario de un pais de habla hispana visita nuestro sitio web, es importante que el contenido se muestre en español, y no en inglés (y viseversa, para los usuarios angloparlantes).
+Algunos ejemplos de esto son:
 
-Para lograr esto, tenemos que traducir el contenido de nuestro sitio web a los idiomas que queremos soportar.
+- Si un usuario de un pais de habla hispana visita nuestro sitio web, es importante que el contenido se muestre en español, y no en inglés (y viseversa, para los usuarios angloparlantes).
+- Al mostrar monedas en nuestra aplicación (por ejemplo, en un carrito de compras), tenemos que tomar en cuenta el formato de la moneda de la región del usuario. Por ejemplo en algunas regiones, el simbolo de la moneda va antes del número (e.g. $100), y en otras regiones va después (e.g. 100 US$).
+- Al mostrar fechas, tenemos que tomar en cuenta el formato de fecha de la región del usuario. Por ejemplo, en algunos países se usa el formato de fecha DD/MM/YYYY, y en otros el formato MM/DD/YYYY.
+
+Todas estos elementos pueden volverse muy tediosos de mantener, y es por eso que existen herramientas que nos ayudan a automatizar este proceso. Este post va a estar enfocado en como traducir el contenido de nuestra aplicacion de la forma mas automatizada, y ademas nos va a dar las bases que necesitamos para poder manejar los distintos formatos de moneda, fechas, etc.
 
 ## ¿Cómo traducir el contenido de un sitio web?
 
-Este proceso es conocido como internacionalización (i18n) y es un proceso que se puede hacer de forma manual, pero que es muy tedioso y propenso a errores.
+Este es uno de los procesos que conlleva la internacionalización (i18n) de una aplicación. Es un proceso que se puede hacer de forma manual, pero que es muy tedioso y propenso a errores.
 Pero como toda tarea tediosa, existen herramientas que nos ayudan a automatizar este proceso.
 
-En este articulo vamos a ver como internacionalizar un sitio web de forma automática con React, utilizando la librería [react-intl](https://www.i18next.com/).
+Por ello vamos a ver como traducir el contenido de nuestra aplicacion de forma automática con React, utilizando la librería [react-intl](https://www.i18next.com/).
 
 ## Setup de nuestra aplicación
 
@@ -123,8 +128,8 @@ Mas adelante implementaremos un componente que nos permita cambiar el idioma de 
 
 ## Como automatizar el proceso de traducción
 
-Una de las partes mas tediosas de internacionalizar una aplicación es traducir el contenido de nuestro sitio web. Por ello formatjs (conjunto de librerías que incluye react-intl) nos provee de una herramienta que nos permite automatizar este proceso.
-En su sitio web podemos ver un ejemplo de como funciona este flujo:
+Para agilizar el proceso de traducción, vamos a utilizar `formatjs` (conjunto de librerías que incluye react-intl), esta nos provee de una herramienta que nos permite automatizar este proceso.
+En su sitio web podemos ver un ejemplo de cómo funciona este flujo:
 [![How to handle i18n for React Apps](https://formatjs.io/assets/images/workflow-cfcf0fe32b9a2d1097fcf2f11ed8b384.svg)](https://formatjs.io/docs/getting-started/application-workflow#pipeline)
 
 El flujo de trabajo propuesto por formatjs es el siguiente:
@@ -158,14 +163,14 @@ const App = () => {
 El componente `FormattedMessage` recibe 3 props:
 
 - `id`: Este prop es un identificador unico para el mensaje, este identificador es utilizado para buscar el mensaje en el archivo de traducciones.
-- `defaultMessage`: Este prop es el mensaje en el idioma por defecto, en este caso `en`.
+- `defaultMessage`: Este prop indica el mensaje por defecto (luego vamos a traducir este mensaje a los otros idiomas).
 - `description`: Este prop es una descripcion del mensaje, esta descripcion es utilizada para ayudar a los traductores a entender el contexto del mensaje.
 
 #### Generar automaticamente los ids de los mensajes
 
-Debido a que nombrar cosas en programación, es una de las tareas más difíciles, personalmente prefiero evitar nombrar cosas manualmente siempre que sea posible, y creo que las personas en `formatjs` piensan lo mismo, ya que nos proveen de una herramienta para generar automaticamente los ids de los mensajes.
+Nombrar cosas en programación, es una de las tareas más difíciles, personalmente prefiero evitar nombrar cosas manualmente siempre que sea posible, y creo que las personas en `formatjs` piensan lo mismo, ya que nos proveen de una herramienta para generar automaticamente los ids de los mensajes.
 
-Para generar automaticamente los ids de los mensajes, vamos a utilizar el plugin es ESLint `eslint-plugin-formatjs`, este plugin nos provee de una regla llamada `formatjs/enforce-default-message`, esta regla nos permite definir un mensaje sin especificar el id, y el plugin va a generar automaticamente el id del mensaje.
+Para generar automaticamente los ids de los mensajes, vamos a utilizar el plugin es ESLint `eslint-plugin-formatjs`, este plugin nos provee de una regla llamada `formatjs/enforce-default-message`, esta nos permite definir un mensaje sin especificar el id, y el plugin va a generar automaticamente el id del mensaje.
 
 Asi que asegurate de tener configurado ESLint en tu proyecto, si estas siguiendo este tutorial, en la siguiente sección te explico como configurar ESLint desde cero, sino, puedes saltarte esta sección.
 
@@ -290,7 +295,7 @@ const App = () => {
 };
 ```
 
-! Genial, ya no tenemos que preocuparnos por crear ids para nuestros mensajes manualmente! Ahora podemos avanzar con la ultima parte de nuestra automatizacion.
+!Genial!, ya no tenemos que preocuparnos por crear ids para nuestros mensajes manualmente! Ahora podemos avanzar con la ultima parte de nuestra automatizacion.
 
 #### Creando un script para extraer los mensajes
 
@@ -316,7 +321,7 @@ Necesitamos crear un script que se encargue de leer todos los archivos `.tsx, .j
 Mediante este script estamos ejecutando el comando `formatjs extract` que es el comando que nos provee la libreria `@formatjs/cli` para extraer los mensajes, y le estamos pasando como varios argumentos:
 
     - `src/**/*.{js,ts,tsx,.jsx}`: Indicamos que queremos extraer los mensajes de todos los archivos que esten dentro de la carpeta `src` y que tengan la extension `.tsx, .jsx, .js`. Asegurate de cambiar `src` por la carpeta donde tengas tus archivos de React.
-    - `--out-file src/translations/messages/es.json`: `--out-file` sirve para indicarle a `formatjs extract` en que archivo queremos que se guarden los mensajes extraidos. Cambia `src/translations/messages/es.json` por la ruta donde quieras que se guarden los mensajes extraidos.
+    - `--out-file src/translations/messages/es.json`: `--out-file` sirve para indicarle a `formatjs extract` en que archivo queremos que se guarden los mensajes extraídos. Cambia `src/translations/messages/es.json` por la ruta donde quieras que se guarden los mensajes extraídos.
     - `--id-interpolation-pattern [sha512:contenthash:base64:6]`: Indicamos que queremos que los ids de los mensajes sean generados automaticamente usando el patron `sha512:contenthash:base64:6`. Esto es lo mismo que definimos en la configuracion de ESLint. Mediante ESLint ya estamos forzando a que todos los mensajes tengan un id, pero en caso de que no estemos usando ESLint, esto nos permitiria generar los ids de los mensajes automaticamente. (Personalmente recomiendo usar ESLint para poder ver los ID de los mensajes en el codigo)
     - `--ignore src/vite-env.d.ts`: Indicamos que queremos ignorar el archivo `src/vite-env.d.ts` ya que este archivo genera un error al intentar extraer los mensajes.
 
@@ -333,7 +338,7 @@ Si ejecutamos nuestro script `extract-messages` vamos a ver que se crea el archi
 }
 ```
 
-Ahora que tenemos los mensajes extraidos en un archivo `.json`, podemos usar este archivo como base para realizar las traducciones a otros idiomas.
+Ahora que tenemos los mensajes extraídos en un archivo `.json`, podemos usar este archivo como base para realizar las traducciones a otros idiomas.
 
 Existen varias herramientas que nos permiten subir un archivo `.json` y que nos generan los archivos `.json` traducidos. Estas herramientas pueden requerir que el archivo `.json` tenga una estructura especifica, para ello puedes pasarle el argumento `--format` a `formatjs extract` para que el archivo `.json` tenga la estructura que requiera la herramienta que vayas a usar.
 
@@ -350,9 +355,9 @@ Por simplificar el tutorial, vamos a crear otro archivo `.json` que va a tener l
 }
 ```
 
-##### Compilando los mensajes extraidos
+##### Compilando los mensajes extraídos
 
-Ahora que tenemos los mensajes extraidos en un archivo `.json` y tenemos los mensajes traducidos a otros idiomas en otros archivos `.json`, es recomendable que los mensajes sean compilados a otro formato (`AST`) para que nuestra aplicación no tenga que hacerlo en runtime.
+Ahora que tenemos los mensajes extraídos en un archivo `.json` y tenemos los mensajes traducidos a otros idiomas en otros archivos `.json`, es recomendable que los mensajes sean compilados a otro formato (`AST`) para que nuestra aplicación no tenga que hacerlo en runtime.
 
 Para compilar los mensajes vamos a usar el comando `formatjs compile` que nos provee la libreria `@formatjs/cli`.
 
@@ -399,7 +404,7 @@ Cuando ejecutemos nuestro script vamos a ver que se ha creado la carpeta `src/tr
 
 #### Usando los mensajes en nuestra aplicación
 
-Ahora que tenemos los mensajes traducidos y compilados, podemos usarlos en nuestra aplicación. Para ellos vamos a modificar nuesto `<IntlProvider>` para que use los mensajes compilados.
+Ahora que tenemos los mensajes traducidos y compilados, podemos usarlos en nuestra aplicación. Para ello vamos a modificar nuesto `<IntlProvider>` para que use los mensajes compilados.
 
 ```tsx src/main.tsx
 import { IntlProvider } from "react-intl";
@@ -488,8 +493,8 @@ Y listo, !ya podemos cambiar el idioma de nuestra aplicación! 🎉
 
 ## Conclusiones
 
-En este post hemos visto como podemos manejar la internacionalización de nuestras aplicaciones React usando `formatjs`, logrando extraer los mensajes automaticamente de nuestra aplicación y traducirlos.
+Hemos visto como podemos manejar la traducción de nuestros mensajes en aplicaciones React usando `formatjs`, esto es uno de los primeros pasos que podemos dar para tener una aplicación internacionalizada.
 
 Pero la internacionalización no es solo traducir los mensajes de nuestra aplicación, también es tener en cuenta los cambios de los formatos en textos como fechas, monedas, unidades de medida, etc. Para esto podemos usar `formatjs` y sus distintos [`formatters`](https://formatjs.io/docs/react-intl/components). Te recomiendo que explores los distintos formatters que ofrece `formatjs` para que puedas usarlos en tu aplicación.
 
-Sin mas que agregar, espero que este post les haya sido de utilidad, y usen la internacionalización para mejorar la experiencia de sus usuarios.
+Espero que sigas explorando `formatjs` y que puedas usarlo en tus aplicaciones.
