@@ -38,6 +38,10 @@ const nextConfig = _withMDX({
   experimental: {
     appDir: true,
   },
+  i18n: {
+    locales: ["en", "es"],
+    defaultLocale: "es",
+  },
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
 });
 
