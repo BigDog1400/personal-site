@@ -1,6 +1,8 @@
 import Giscus from "@giscus/react";
+import { useRouter } from "next/router";
 
 export default function CommentsSection() {
+  const router = useRouter();
   return (
     <Giscus
       repo="BigDog1400/personal-site"
@@ -12,6 +14,7 @@ export default function CommentsSection() {
       emitMetadata="0"
       theme="preferred_color_scheme"
       loading="lazy"
+      lang={router.locale || "es"}
     />
   );
 }

@@ -1,12 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import { FormattedMessage } from "react-intl";
-
+import { useRouter } from "next/router";
+import { FaGlobe } from "react-icons/fa";
 interface CommonLayoutProps {
   children: React.ReactNode;
 }
 
 export function CommonLayoutPage({ children }: CommonLayoutProps) {
+  const router = useRouter();
+
   return (
     <main>
       <header className="flex justify-center">
@@ -37,10 +40,21 @@ export function CommonLayoutPage({ children }: CommonLayoutProps) {
               <Link href="/blog">Blog</Link>
             </li>
 
-            <li className="text-white text-sm md:text-base hover:text-gray-300">
-              <Link href="/#graveyard-projects">
-                Graveyard projects <span className="text-red-500">👻</span>
-              </Link>{" "}
+            {/* lang toggle */}
+            <li className="text-white text-sm md:text-base  hover:text-gray-300">
+              <Link
+                href={router.asPath}
+                lang={router.locale === "en" ? "es" : "en"}
+                locale={router.locale === "en" ? "es" : "en"}
+                className="flex items-center gap-2"
+              >
+                <FaGlobe />
+                {router.locale === "es" ? (
+                  <FormattedMessage defaultMessage="English" id="WkrNSk" />
+                ) : (
+                  <FormattedMessage defaultMessage="Español" id="dX8jTq" />
+                )}
+              </Link>
             </li>
           </ul>
         </nav>
