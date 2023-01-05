@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { SocialLinks } from "./social-links";
 import { useMutation } from "@tanstack/react-query";
+import { FormattedMessage } from "react-intl";
 
 interface IFormInput {
   name: string;
@@ -38,10 +39,13 @@ function ContactMe() {
       >
         <div className="flex flex-col justify-center  pt-20 max-w-3xl ">
           <h1 className="text-7xl text-white font-bold text-center">
-            Mensaje enviado
+            <FormattedMessage defaultMessage="Mensaje enviado" id="N6Lh3s" />
           </h1>
           <p className="text-gray-300 text-md mt-20 text-center">
-            Gracias por contactarme, te responderé lo antes posible
+            <FormattedMessage
+              defaultMessage="Gracias por contactarme, te responderé lo antes posible"
+              id="5bdgRq"
+            />
           </p>
         </div>
       </section>
@@ -54,16 +58,24 @@ function ContactMe() {
       id="contact"
     >
       <div className="flex flex-col justify-center max-w-3xl">
-        <h1 className="text-7xl text-white font-bold text-center">Contacto</h1>
+        <h1 className="text-7xl text-white font-bold text-center">
+          <FormattedMessage defaultMessage="Contacto" id="Z9WYEx" />
+        </h1>
         <p className="text-gray-300 text-md mt-10 md:mt-20 text-center">
-          ¿Quieres contactarme? Puedes hacerlo a través de mis redes sociales
+          <FormattedMessage
+            defaultMessage="¿Quieres contactarme? Puedes hacerlo a través de mis redes sociales"
+            id="CJvX+J"
+          />
         </p>
         <div className="flex flex-col justify-center items-center mt-4 md:mt-6">
           <SocialLinks />
         </div>
         <div className="flex flex-col justify-center items-center mt-4 md:mt-6">
           <p className="text-gray-300 text-md  text-center">
-            O puedes enviarme un mensaje a través de este formulario
+            <FormattedMessage
+              defaultMessage="O puedes enviarme un mensaje a través de este formulario"
+              id="j1EmZI"
+            />
           </p>
         </div>
 
@@ -73,7 +85,7 @@ function ContactMe() {
         >
           <div className="flex flex-col space-y-2">
             <label htmlFor="name" className="text-black">
-              Nombre
+              <FormattedMessage defaultMessage="Nombre" id="hCOqfl" />
             </label>
             <input
               type="text"
@@ -86,7 +98,7 @@ function ContactMe() {
           </div>
           <div className="flex flex-col space-y-2">
             <label htmlFor="email" className="text-black">
-              Email
+              <FormattedMessage defaultMessage="Correo" id="otXL2t" />
             </label>
             <input
               type="email"
@@ -99,18 +111,17 @@ function ContactMe() {
           </div>
           <div className="flex flex-col space-y-2">
             <label htmlFor="message" className="text-black">
-              Mensaje
+              <FormattedMessage defaultMessage="Mensaje" id="b9prTq" />
             </label>
             <textarea
               required
               id="message"
-              placeholder="Escribe tu mensaje aquí"
               className="rounded-md p-2 border-2 border-black text-black"
               {...register("message", { required: true })}
             />
           </div>
           <button type="submit" className="bg-black text-white rounded-md p-2">
-            Enviar
+            <FormattedMessage defaultMessage="Enviar" id="hKJZJR" />
           </button>
         </form>
       </div>

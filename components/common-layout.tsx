@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { FormattedMessage } from "react-intl";
 
 interface CommonLayoutProps {
   children: React.ReactNode;
@@ -22,11 +23,15 @@ export function CommonLayoutPage({ children }: CommonLayoutProps) {
 
           <ul className="md:space-x-8 h-14 flex justify-around items-center gap-2">
             <li className="text-white text-sm md:text-base hover:text-gray-300">
-              <Link href="/#about">Sobre mi</Link>
+              <Link href="/#about">
+                <FormattedMessage defaultMessage="Sobre mi" id="uqJyuM" />
+              </Link>
             </li>
 
             <li className="text-white text-sm md:text-base   hover:text-gray-300">
-              <Link href="/#contact  ">Contacto</Link>
+              <Link href="/#contact  ">
+                <FormattedMessage defaultMessage="Contacto" id="Z9WYEx" />
+              </Link>
             </li>
             <li className="text-white text-sm md:text-base  hover:text-gray-300">
               <Link href="/blog">Blog</Link>

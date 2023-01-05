@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 interface GraveyardProjectsProps {
   className?: string;
@@ -17,9 +18,12 @@ export function GraveyardProjects({
           Graveyard Projects <span className="text-4xl">👻</span>
         </h1>
         <p className="text-gray-300 text-md mt-10 text-center">
-          Mis proyectos que he dejado de lado por falta de tiempo o por no tener
+          <FormattedMessage
+            defaultMessage="Mis proyectos que he dejado de lado por falta de tiempo o por no tener
           una idea clara de cómo continuarlos, pero que me han servido para
-          aprender nuevas tecnologías y mejorar mis habilidades.
+          aprender nuevas tecnologías y mejorar mis habilidades."
+            id="EJFyNO"
+          />
         </p>
         <div className="flex flex-col justify-center items-center mt-12 gap-4">
           <div className="flex flex-col  justify-center bg-gray-900 w-[100%] p-6 md:p-10 rounded-lg ">
@@ -34,13 +38,20 @@ export function GraveyardProjects({
               </picture>
 
               <div className="w-auto">
-                <h5 className="text-[#fafafa] text-lg">Descripción</h5>
+                <h5 className="text-[#fafafa] text-lg">
+                  <FormattedMessage defaultMessage="Descripción" id="Y/M4WZ" />
+                </h5>
                 <p className="text-md text-gray-300">
-                  Kiosko es una aplicación web que permite a los usuarios crear
+                  <FormattedMessage
+                    defaultMessage="Kiosko es una aplicación web que permite a los usuarios crear
                   sus propias tiendas virtuales, donde podrán vender sus
-                  productos y servicios.
+                  productos y servicios."
+                    id="SzNIL7"
+                  />
                 </p>
-                <h5 className="text-white text-lg mt-5">Tecnologías</h5>
+                <h5 className="text-white text-lg mt-5">
+                  <FormattedMessage defaultMessage="Tecnologías" id="BeANnC" />
+                </h5>
                 <p className="text-gray-300 text-md">
                   React, Next.js, Chakra-UI, SQL, tRPC, Auth0 y Vercel.
                 </p>
@@ -59,13 +70,20 @@ export function GraveyardProjects({
               </picture>
 
               <div className="w-auto">
-                <h5 className="text-white text-lg">Descripción</h5>
+                <h5 className="text-white text-lg">
+                  <FormattedMessage defaultMessage="Descripción" id="Y/M4WZ" />
+                </h5>
                 <p className="text-gray-300 text-md">
-                  OpenToWork es una aplicación web que permite a los usuarios
+                  <FormattedMessage
+                    defaultMessage="OpenToWork es una aplicación web que permite a los usuarios
                   encontrar su trabajo ideal, y a las empresas encontrar el
-                  mejor talento.
+                  mejor talento."
+                    id="kt58LC"
+                  />
                 </p>
-                <h5 className="text-white text-lg mt-5">Tecnologías</h5>
+                <h5 className="text-white text-lg mt-5">
+                  <FormattedMessage defaultMessage="Tecnologías" id="BeANnC" />
+                </h5>
                 <p className="text-gray-300 text-md">
                   React, Next.js, Chakra-UI, SQL, AWS Cognito, Node.js, Express,
                   MongoDB, y Vercel.

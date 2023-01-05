@@ -6,6 +6,7 @@ import Link from "next/link";
 import { GraveyardProjects } from "../components/graveyard-projects";
 import { CommonLayoutPage } from "../components/common-layout";
 import { HeadMetadata } from "../components/head-metadata";
+import { FormattedMessage } from "react-intl";
 
 export default function Home() {
   return (
@@ -24,13 +25,19 @@ export default function Home() {
                 Web developer
               </h2>
               <p className="text-gray-300 pt-5 text-lg">
-                Soy un desarrollador web con +2 años de experiencia. Me gusta
+                <FormattedMessage
+                  defaultMessage="Soy un desarrollador web con +2 años de experiencia. Me gusta
                 realizar proyectos personales para experimentar con nuevas
-                tecnologías y aprender nuevas cosas.
+                tecnologías y aprender nuevas cosas."
+                  id="1W2Fo7"
+                />
               </p>
               <p className="text-gray-300 pt-5 text-lg">
-                Bienvenido a mi sitio web, aquí podrás encontrar información
-                sobre mi, mis proyectos, y mi blog.
+                <FormattedMessage
+                  defaultMessage="Bienvenido a mi sitio web, aquí podrás encontrar información
+                sobre mi, mis proyectos, y mi blog."
+                  id="ZbVxt5"
+                />
               </p>
             </div>
             <div
