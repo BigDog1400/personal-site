@@ -19,10 +19,8 @@ export function GraveyardProjects({
         </h1>
         <p className="text-gray-300 text-md mt-10 text-center">
           <FormattedMessage
-            defaultMessage="Mis proyectos que he dejado de lado por falta de tiempo o por no tener
-          una idea clara de cómo continuarlos, pero que me han servido para
-          aprender nuevas tecnologías y mejorar mis habilidades."
-            id="EJFyNO"
+            defaultMessage="Mis proyectos que he dejado de lado por falta de tiempo o por no tener una idea clara de cómo continuarlos, pero que me han servido para aprender nuevas tecnologías y mejorar mis habilidades."
+            id="U6MTu4"
           />
         </p>
         <div className="flex flex-col justify-center items-center mt-12 gap-4">
@@ -43,10 +41,8 @@ export function GraveyardProjects({
                 </h5>
                 <p className="text-md text-gray-300">
                   <FormattedMessage
-                    defaultMessage="Kiosko es una aplicación web que permite a los usuarios crear
-                  sus propias tiendas virtuales, donde podrán vender sus
-                  productos y servicios."
-                    id="SzNIL7"
+                    defaultMessage="Kiosko es una aplicación web que permite a los usuarios crear sus propias tiendas virtuales, donde podrán vender sus productos y servicios."
+                    id="LM8HxU"
                   />
                 </p>
                 <h5 className="text-white text-lg mt-5">
@@ -75,10 +71,8 @@ export function GraveyardProjects({
                 </h5>
                 <p className="text-gray-300 text-md">
                   <FormattedMessage
-                    defaultMessage="OpenToWork es una aplicación web que permite a los usuarios
-                  encontrar su trabajo ideal, y a las empresas encontrar el
-                  mejor talento."
-                    id="kt58LC"
+                    defaultMessage="OpenToWork es una aplicación web que permite a los usuarios encontrar su trabajo ideal, y a las empresas encontrar el mejor talento."
+                    id="UJYmPW"
                   />
                 </p>
                 <h5 className="text-white text-lg mt-5">

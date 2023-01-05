@@ -26,17 +26,14 @@ export default function Home() {
               </h2>
               <p className="text-gray-300 pt-5 text-lg">
                 <FormattedMessage
-                  defaultMessage="Soy un desarrollador web con +2 años de experiencia. Me gusta
-                realizar proyectos personales para experimentar con nuevas
-                tecnologías y aprender nuevas cosas."
-                  id="1W2Fo7"
+                  defaultMessage="Soy un desarrollador web con +2 años de experiencia. Me gusta realizar proyectos personales para experimentar con nuevas tecnologías y aprender nuevas cosas."
+                  id="o5g2fJ"
                 />
               </p>
               <p className="text-gray-300 pt-5 text-lg">
                 <FormattedMessage
-                  defaultMessage="Bienvenido a mi sitio web, aquí podrás encontrar información
-                sobre mi, mis proyectos, y mi blog."
-                  id="ZbVxt5"
+                  defaultMessage="Bienvenido a mi sitio web, aquí podrás encontrar información sobre mi, mis proyectos, y mi blog."
+                  id="wR/6gp"
                 />
               </p>
             </div>
